@@ -6,56 +6,56 @@ const TestimonialsSection = () => {
   const testimonials = [
     {
       id: 1,
-      name: "Sarah Mitchell",
-      location: "Hamilton",
+      name: "Mark & Lisa Donovan",
+      location: "Backyard Deck",
       rating: 5,
-      text: "Earl's team transformed our backyard into an absolute oasis. The patio they built is stunning, and the attention to detail was incredible. Highly recommend!",
-      avatar: "SM",
+      text: "They built a two-level composite deck that completely changed how we use our backyard. The craftsmanship is incredible — every joint, every railing detail is perfect.",
+      avatar: "MD",
     },
     {
       id: 2,
-      name: "Michael Chen",
-      location: "Burlington",
+      name: "Rachel Simmons",
+      location: "Pergola Install",
       rating: 5,
-      text: "We've been using Earl's Landscaping for our lawn care for 3 years now. Always reliable, professional, and our lawn has never looked better.",
-      avatar: "MC",
+      text: "Our louvered pergola is the best investment we've made. The team was professional from design to final walkthrough. We practically live outside now.",
+      avatar: "RS",
     },
     {
       id: 3,
-      name: "Jennifer Williams",
-      location: "Oakville",
+      name: "James Kowalski",
+      location: "Custom Shed",
       rating: 5,
-      text: "From the initial consultation to the final walkthrough, the experience was seamless. They designed a garden that blooms beautifully every season.",
-      avatar: "JW",
+      text: "I needed a workshop that matched my home's style. They nailed it — insulated, wired, and finished beautifully. It's more than a shed, it's my favorite room.",
+      avatar: "JK",
     },
     {
       id: 4,
-      name: "Robert Thompson",
-      location: "Mississauga",
-      rating: 4,
-      text: "Great communication throughout the project. The retaining wall they built solved our drainage issues and looks fantastic. Will definitely use again.",
-      avatar: "RT",
+      name: "Priya Patel",
+      location: "Open Concept Space",
+      rating: 5,
+      text: "They designed an open concept outdoor living area with a deck, pergola, and privacy screens all integrated. It feels like a natural extension of our home.",
+      avatar: "PP",
     },
     {
       id: 5,
-      name: "Amanda Foster",
-      location: "Stoney Creek",
-      rating: 5,
-      text: "Professional, punctual, and the results speak for themselves. Our neighbors keep asking who did our landscaping. Thank you, Earl's team!",
-      avatar: "AF",
+      name: "Tom & Angela Rivera",
+      location: "Deck & Pergola Combo",
+      rating: 4,
+      text: "Great communication throughout the project. The deck and attached pergola look stunning. Our neighbors keep asking who built it. Highly recommend.",
+      avatar: "TR",
     },
     {
       id: 6,
-      name: "David Park",
-      location: "Grimsby",
+      name: "David Okafor",
+      location: "Ground-Level Deck",
       rating: 5,
-      text: "The best landscaping company in the Hamilton area. Fair pricing, excellent work, and they cleaned up perfectly after the job was done.",
-      avatar: "DP",
+      text: "Clean work, fair pricing, and they finished ahead of schedule. The ground-level deck with built-in planters is exactly what we envisioned. Top-notch crew.",
+      avatar: "DO",
     },
   ];
 
-  const overallRating = 4.8;
-  const totalReviews = 127;
+  const overallRating = 4.9;
+  const totalReviews = 84;
 
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
@@ -101,7 +101,7 @@ const TestimonialsSection = () => {
 
         {/* Testimonials Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {testimonials.map((testimonial, index) => (
+          {testimonials.map((testimonial) => (
             <Card
               key={testimonial.id}
               className="bg-card border-0 shadow-sm hover:shadow-lg transition-shadow duration-300 testimonial-card"

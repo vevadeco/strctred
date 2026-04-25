@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Leaf } from "lucide-react";
+import { Menu, X, Hammer } from "lucide-react";
 
 const Navbar = ({ onGetQuote, hasPromo = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,7 +15,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
   }, []);
 
   const navLinks = [
-    { name: "Services", href: "#services" },
+    { name: "Structures", href: "#services" },
     { name: "Testimonials", href: "#testimonials" },
     { name: "Service Area", href: "#service-area" },
   ];
@@ -30,16 +30,16 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2" data-testid="logo">
-            <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
-              <Leaf className="w-5 h-5 text-primary-foreground" />
+          <a href="#" className="flex items-center gap-3" data-testid="logo">
+            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
+              <Hammer className="w-5 h-5 text-primary-foreground" />
             </div>
             <div className="flex flex-col">
-              <span className="font-heading text-xl text-foreground leading-tight">
-                Earl's
+              <span className="font-heading text-xl text-foreground leading-tight font-semibold tracking-tight">
+                Strctred
               </span>
-              <span className="text-xs text-muted-foreground font-body tracking-wide">
-                LANDSCAPING
+              <span className="text-[10px] text-muted-foreground font-body tracking-[0.2em] uppercase">
+                Living Spaces
               </span>
             </div>
           </a>
@@ -50,7 +50,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
               <a
                 key={link.name}
                 href={link.href}
-                className="text-foreground/80 hover:text-primary transition-colors font-body font-medium"
+                className="text-foreground/80 hover:text-primary transition-colors font-body font-medium text-sm"
                 data-testid={`nav-link-${link.name.toLowerCase().replace(" ", "-")}`}
               >
                 {link.name}
@@ -61,7 +61,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
               className="bg-primary hover:bg-primary/90 text-primary-foreground font-body font-semibold px-6 btn-primary"
               data-testid="nav-get-quote-btn"
             >
-              Get Free Quote
+              Get Free Estimate
             </Button>
           </div>
 
@@ -69,6 +69,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
           <button
             className="md:hidden p-2 text-foreground"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle mobile menu"
             data-testid="mobile-menu-btn"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -98,7 +99,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
               className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-body font-semibold"
               data-testid="mobile-get-quote-btn"
             >
-              Get Free Quote
+              Get Free Estimate
             </Button>
           </div>
         </div>

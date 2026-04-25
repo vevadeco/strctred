@@ -1,14 +1,14 @@
-import { Leaf, Phone, Mail, MapPin } from "lucide-react";
+import { Hammer, Phone, Mail, MapPin } from "lucide-react";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
 
-  const services = [
-    "Lawn Care & Maintenance",
-    "Garden Planting",
-    "Hardscaping",
-    "Seasonal Cleanup",
-    "Snow Removal",
+  const structures = [
+    "Custom Decks",
+    "Pergolas & Shade Structures",
+    "Sheds & Outbuildings",
+    "Open Concept Outdoor Living",
+    "Railings & Privacy Screens",
   ];
 
   const serviceAreas = [
@@ -17,7 +17,7 @@ const Footer = () => {
     "Oakville",
     "Mississauga",
     "Toronto",
-    "GTA",
+    "Niagara Region",
   ];
 
   return (
@@ -27,37 +27,37 @@ const Footer = () => {
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-10 h-10 bg-secondary rounded-full flex items-center justify-center">
-                <Leaf className="w-5 h-5 text-primary" />
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
+                <Hammer className="w-5 h-5 text-primary" />
               </div>
               <div className="flex flex-col">
-                <span className="font-heading text-xl leading-tight">Earl's</span>
-                <span className="text-xs text-primary-foreground/80 font-body tracking-wide">
-                  LANDSCAPING
+                <span className="font-heading text-xl leading-tight font-semibold">Strctred</span>
+                <span className="text-[10px] text-primary-foreground/80 font-body tracking-[0.2em] uppercase">
+                  Living Spaces
                 </span>
               </div>
             </div>
             <p className="font-body text-primary-foreground/80 text-sm leading-relaxed mb-6">
-              Hamilton's trusted landscaping experts. Transforming outdoor spaces 
-              with quality craftsmanship since 2009.
+              Premium outdoor structures built with precision craftsmanship. 
+              Decks, pergolas, sheds, and open concept spaces designed for how you live.
             </p>
             <div className="space-y-3">
               <a
-                href="tel:+19059792655"
+                href="tel:+15551234567"
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-secondary transition-colors"
                 data-testid="footer-phone"
               >
                 <Phone className="w-4 h-4" />
-                <span className="font-body text-sm">(905) 979-2655</span>
+                <span className="font-body text-sm">(555) 123-4567</span>
               </a>
               <a
-                href="mailto:info@earlslandscaping.ca"
+                href="mailto:hello@strctred.com"
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-secondary transition-colors"
                 data-testid="footer-email"
               >
                 <Mail className="w-4 h-4" />
-                <span className="font-body text-sm">info@earlslandscaping.ca</span>
+                <span className="font-body text-sm">hello@strctred.com</span>
               </a>
               <div className="flex items-center gap-3 text-primary-foreground/80">
                 <MapPin className="w-4 h-4 flex-shrink-0" />
@@ -66,17 +66,17 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* Services */}
+          {/* Structures */}
           <div>
-            <h4 className="font-heading text-lg mb-6">Our Services</h4>
+            <h4 className="font-heading text-lg mb-6">What We Build</h4>
             <ul className="space-y-3">
-              {services.map((service) => (
-                <li key={service}>
+              {structures.map((item) => (
+                <li key={item}>
                   <a
                     href="#services"
                     className="font-body text-sm text-primary-foreground/80 hover:text-secondary transition-colors"
                   >
-                    {service}
+                    {item}
                   </a>
                 </li>
               ))}
@@ -85,7 +85,7 @@ const Footer = () => {
 
           {/* Service Areas */}
           <div>
-            <h4 className="font-heading text-lg mb-6">Service Areas</h4>
+            <h4 className="font-heading text-lg mb-6">Where We Build</h4>
             <ul className="space-y-3">
               {serviceAreas.map((area) => (
                 <li key={area}>
@@ -100,17 +100,17 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* Hours */}
+          {/* Hours & Info */}
           <div>
             <h4 className="font-heading text-lg mb-6">Business Hours</h4>
             <div className="space-y-3 font-body text-sm text-primary-foreground/80">
               <div className="flex justify-between">
-                <span>Monday - Friday</span>
-                <span>7:00 AM - 6:00 PM</span>
+                <span>Monday – Friday</span>
+                <span>7:00 AM – 5:00 PM</span>
               </div>
               <div className="flex justify-between">
                 <span>Saturday</span>
-                <span>8:00 AM - 4:00 PM</span>
+                <span>8:00 AM – 2:00 PM</span>
               </div>
               <div className="flex justify-between">
                 <span>Sunday</span>
@@ -119,9 +119,9 @@ const Footer = () => {
             </div>
             <div className="mt-6 p-4 bg-secondary/20 rounded-lg">
               <p className="font-body text-sm">
-                <span className="font-semibold text-secondary">Emergency Services</span>
+                <span className="font-semibold text-secondary">Free Site Visits</span>
                 <br />
-                Available 24/7 for urgent needs
+                We come to you for estimates — no obligation.
               </p>
             </div>
           </div>
@@ -131,7 +131,7 @@ const Footer = () => {
         <div className="border-t border-primary-foreground/10 py-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="font-body text-sm text-primary-foreground/60">
-              © {currentYear} Earl's Landscaping. All rights reserved.
+              © {currentYear} Strctred Living Spaces. All rights reserved.
             </p>
             <div className="flex items-center gap-6">
               <a

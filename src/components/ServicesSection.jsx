@@ -1,38 +1,38 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Leaf, Flower2, HardHat } from "lucide-react";
+import { ArrowRight, Columns3, Fence, Warehouse, LayoutPanelTop } from "lucide-react";
 
 const ServicesSection = ({ onGetQuote }) => {
   const services = [
     {
-      id: "lawn-care",
-      title: "Lawn Care & Maintenance",
+      id: "deck-build",
+      title: "Custom Decks",
       description:
-        "Keep your lawn looking pristine year-round with our comprehensive care program. Mowing, fertilization, aeration, and seasonal treatments.",
-      icon: Leaf,
-      image: "https://images.pexels.com/photos/4920283/pexels-photo-4920283.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      features: ["Weekly Mowing", "Fertilization", "Weed Control", "Seasonal Cleanup"],
+        "Elevated or ground-level, composite or natural wood — we design and build decks that become the heart of your backyard. Multi-level layouts, built-in seating, and integrated lighting available.",
+      icon: LayoutPanelTop,
+      image: "https://images.unsplash.com/photo-1591825729269-caeb344f6df2?auto=format&fit=crop&q=80&w=940",
+      features: ["Composite & Cedar", "Multi-Level", "Built-In Lighting", "Railing Systems"],
       span: "md:col-span-2 md:row-span-2",
       large: true,
     },
     {
-      id: "garden-planting",
-      title: "Garden Planting",
+      id: "pergola",
+      title: "Pergolas & Shade Structures",
       description:
-        "Beautiful flower beds and garden designs that bloom throughout the seasons.",
-      icon: Flower2,
-      image: "https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&q=80&w=800",
-      features: ["Flower Beds", "Shrubs & Trees", "Seasonal Plants"],
+        "Freestanding or attached pergolas that define your outdoor room with style and shade.",
+      icon: Columns3,
+      image: "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&q=80&w=800",
+      features: ["Louvered Roofs", "Attached & Freestanding", "Custom Stain"],
       span: "md:col-span-1",
       large: false,
     },
     {
-      id: "hardscaping",
-      title: "Hardscaping & Patios",
+      id: "shed",
+      title: "Sheds & Outbuildings",
       description:
-        "Transform your outdoor space with stunning patios, walkways, and retaining walls.",
-      icon: HardHat,
-      image: "https://images.pexels.com/photos/6313939/pexels-photo-6313939.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
-      features: ["Patios", "Walkways", "Retaining Walls"],
+        "From storage sheds to workshops and studios — functional structures built to match your home.",
+      icon: Warehouse,
+      image: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&q=80&w=800",
+      features: ["Storage", "Workshops", "She-Sheds & Studios"],
       span: "md:col-span-1",
       large: false,
     },
@@ -48,21 +48,21 @@ const ServicesSection = ({ onGetQuote }) => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 bg-secondary/30 text-primary font-body font-medium text-sm rounded-full mb-4">
-            Our Services
+            What We Build
           </span>
           <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl text-foreground mb-4">
-            Professional Landscaping
+            Outdoor Structures
             <br />
-            <span className="text-primary">Services</span>
+            <span className="text-primary">Built to Last</span>
           </h2>
           <p className="font-body text-muted-foreground text-lg max-w-2xl mx-auto">
-            From routine lawn care to complete outdoor transformations, we deliver exceptional results.
+            From custom decks to open concept living spaces, every structure is engineered for durability and designed for your lifestyle.
           </p>
         </div>
 
         {/* Bento Grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div
               key={service.id}
               className={`${service.span} relative group overflow-hidden rounded-2xl bento-item`}
@@ -70,10 +70,10 @@ const ServicesSection = ({ onGetQuote }) => {
             >
               {/* Background Image */}
               <div
-                className={`absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105`}
+                className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                 style={{ backgroundImage: `url('${service.image}')` }}
               />
-              
+
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
 
@@ -104,7 +104,7 @@ const ServicesSection = ({ onGetQuote }) => {
                   {service.description}
                 </p>
 
-                {/* Features Tags */}
+                {/* Feature Tags */}
                 <div className="flex flex-wrap gap-2 mb-4">
                   {service.features.map((feature, idx) => (
                     <span
@@ -122,7 +122,7 @@ const ServicesSection = ({ onGetQuote }) => {
                     className="w-fit bg-accent hover:bg-accent/90 text-accent-foreground font-body font-semibold group/btn"
                     data-testid="service-cta-btn"
                   >
-                    Get Started
+                    Start Your Project
                     <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
                   </Button>
                 )}
@@ -131,10 +131,41 @@ const ServicesSection = ({ onGetQuote }) => {
           ))}
         </div>
 
+        {/* Open Concept Feature Block */}
+        <div className="mt-12 relative group overflow-hidden rounded-2xl bento-item">
+          <div
+            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=80&w=1400')`,
+            }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/50 to-transparent" />
+          <div className="relative z-10 flex flex-col justify-center p-8 md:p-12 min-h-[300px] max-w-xl">
+            <div className="w-12 h-12 bg-secondary rounded-xl flex items-center justify-center mb-4">
+              <Fence className="w-6 h-6 text-primary" />
+            </div>
+            <h3 className="font-heading text-2xl lg:text-3xl text-white mb-3">
+              Open Concept Outdoor Living
+            </h3>
+            <p className="font-body text-white/80 mb-6">
+              Seamlessly blend your indoor and outdoor spaces. We design and build complete outdoor rooms — 
+              combining decks, pergolas, privacy screens, and integrated features into one cohesive living area.
+            </p>
+            <Button
+              onClick={onGetQuote}
+              className="w-fit bg-accent hover:bg-accent/90 text-accent-foreground font-body font-semibold group/btn"
+              data-testid="open-concept-cta-btn"
+            >
+              Explore Open Concepts
+              <ArrowRight className="w-4 h-4 ml-2 transition-transform group-hover/btn:translate-x-1" />
+            </Button>
+          </div>
+        </div>
+
         {/* Bottom CTA */}
         <div className="text-center mt-12">
           <p className="font-body text-muted-foreground mb-4">
-            Not sure what service you need? We'll help you figure it out.
+            Not sure where to start? We'll help you plan the perfect structure.
           </p>
           <Button
             onClick={onGetQuote}

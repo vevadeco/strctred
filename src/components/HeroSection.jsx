@@ -12,7 +12,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Star, Shield, Clock } from "lucide-react";
+import { CheckCircle, Star, Shield, Ruler } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -29,15 +29,15 @@ const HeroSection = () => {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const services = [
-    { value: "lawn-care", label: "Lawn Care & Maintenance" },
-    { value: "garden-planting", label: "Garden Planting" },
-    { value: "hardscaping", label: "Hardscaping (Patios, Walkways)" },
-    { value: "full-service", label: "Full Landscaping Service" },
+    { value: "deck-build", label: "Custom Deck Build" },
+    { value: "pergola", label: "Pergola Design & Install" },
+    { value: "shed", label: "Shed / Outbuilding" },
+    { value: "open-concept", label: "Open Concept Outdoor Living" },
   ];
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     if (!formData.name || !formData.email || !formData.phone || !formData.service_type) {
       toast.error("Please fill in all fields");
       return;
@@ -61,9 +61,9 @@ const HeroSection = () => {
   };
 
   const trustBadges = [
-    { icon: Star, text: "4.8 Star Rating" },
-    { icon: Shield, text: "Fully Insured" },
-    { icon: Clock, text: "Same Week Service" },
+    { icon: Star, text: "5-Star Builds" },
+    { icon: Shield, text: "Fully Licensed" },
+    { icon: Ruler, text: "Custom Designs" },
   ];
 
   return (
@@ -72,11 +72,11 @@ const HeroSection = () => {
       className="relative min-h-screen flex items-center pt-20"
       data-testid="hero-section"
     >
-      {/* Background Image */}
+      {/* Background Image — outdoor deck/pergola scene */}
       <div
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url('https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&q=80&w=2000')`,
+          backgroundImage: `url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=80&w=2000')`,
         }}
       >
         <div className="hero-overlay absolute inset-0" />
@@ -86,14 +86,17 @@ const HeroSection = () => {
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Left Content */}
           <div className="text-white animate-fade-in-up">
+            <span className="inline-block px-4 py-1.5 bg-white/10 backdrop-blur-sm text-secondary font-body font-medium text-sm rounded-full mb-6 border border-white/20">
+              Premium Outdoor Structures
+            </span>
             <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-              Transform Your
+              Build Your
               <br />
-              <span className="text-secondary">Outdoor Space</span>
+              <span className="text-secondary">Outdoor Vision</span>
             </h1>
             <p className="font-body text-lg sm:text-xl text-white/90 mb-8 max-w-lg leading-relaxed">
-              Hamilton's trusted landscaping experts. From lush lawns to stunning hardscapes, 
-              we bring your outdoor vision to life with over 15 years of experience.
+              Custom decks, pergolas, sheds, and open concept outdoor living spaces — 
+              crafted with precision and built to stand the test of time.
             </p>
 
             {/* Trust Badges */}
@@ -101,7 +104,7 @@ const HeroSection = () => {
               {trustBadges.map((badge, index) => (
                 <div
                   key={index}
-                  className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2"
+                  className="flex items-center gap-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 border border-white/10"
                   data-testid={`trust-badge-${index}`}
                 >
                   <badge.icon className="w-4 h-4 text-secondary" />
@@ -113,9 +116,9 @@ const HeroSection = () => {
             {/* Features List */}
             <div className="space-y-3">
               {[
-                "Free consultation & detailed quotes",
-                "Licensed & insured professionals",
-                "Satisfaction guaranteed",
+                "Free on-site consultation & 3D design preview",
+                "Engineered for your climate & terrain",
+                "Backed by our structural warranty",
               ].map((feature, index) => (
                 <div
                   key={index}
@@ -129,15 +132,15 @@ const HeroSection = () => {
             </div>
           </div>
 
-          {/* Right Content - Lead Form */}
+          {/* Right Content — Lead Form */}
           <div className="animate-fade-in-up animation-delay-200">
             <Card className="bg-card shadow-2xl border-0 rounded-2xl overflow-hidden" data-testid="lead-form-card">
               <CardHeader className="bg-primary text-primary-foreground p-6">
                 <CardTitle className="font-heading text-2xl text-center">
-                  Get Your Free Quote
+                  Get Your Free Estimate
                 </CardTitle>
                 <p className="text-center text-primary-foreground/80 font-body text-sm mt-2">
-                  We'll respond within 24 hours
+                  We'll get back to you within 24 hours
                 </p>
               </CardHeader>
               <CardContent className="p-6">
@@ -150,7 +153,7 @@ const HeroSection = () => {
                       Thank You!
                     </h3>
                     <p className="font-body text-muted-foreground">
-                      We've received your request and will contact you within 24 hours.
+                      We've received your request and will reach out within 24 hours to discuss your project.
                     </p>
                     <Button
                       onClick={() => setIsSubmitted(false)}
@@ -170,7 +173,7 @@ const HeroSection = () => {
                       <Input
                         id="name"
                         type="text"
-                        placeholder="John Smith"
+                        placeholder="Your name"
                         value={formData.name}
                         onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                         className="mt-1.5 font-body"
@@ -185,7 +188,7 @@ const HeroSection = () => {
                       <Input
                         id="email"
                         type="email"
-                        placeholder="john@example.com"
+                        placeholder="you@example.com"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                         className="mt-1.5 font-body"
@@ -200,7 +203,7 @@ const HeroSection = () => {
                       <Input
                         id="phone"
                         type="tel"
-                        placeholder="(905) 979-2655"
+                        placeholder="(555) 123-4567"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                         className="mt-1.5 font-body"
@@ -210,14 +213,14 @@ const HeroSection = () => {
 
                     <div>
                       <Label htmlFor="service" className="font-body font-medium text-foreground">
-                        Service Needed
+                        What Are You Building?
                       </Label>
                       <Select
                         value={formData.service_type}
                         onValueChange={(value) => setFormData({ ...formData, service_type: value })}
                       >
                         <SelectTrigger className="mt-1.5 font-body" data-testid="select-service">
-                          <SelectValue placeholder="Select a service" />
+                          <SelectValue placeholder="Select a structure type" />
                         </SelectTrigger>
                         <SelectContent>
                           {services.map((service) => (
@@ -240,11 +243,11 @@ const HeroSection = () => {
                       disabled={isSubmitting}
                       data-testid="submit-form-btn"
                     >
-                      {isSubmitting ? "Submitting..." : "Get My Free Quote"}
+                      {isSubmitting ? "Submitting..." : "Get My Free Estimate"}
                     </Button>
 
                     <p className="text-center text-xs text-muted-foreground font-body">
-                      No spam. We respect your privacy.
+                      No spam, ever. Your info stays with us.
                     </p>
                   </form>
                 )}

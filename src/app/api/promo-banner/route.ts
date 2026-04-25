@@ -4,11 +4,11 @@ export async function GET() {
   // Default settings if DB not configured or no row exists yet
   const fallback = {
     enabled: true,
-    title: "Spring Cleanup Special - 15% OFF!",
-    subtitle: "Book by March 1st to save",
-    discount_text: "15% OFF",
+    title: "Summer Build Special — 10% OFF Decks & Pergolas!",
+    subtitle: "Book your project before the season fills up",
+    discount_text: "10% OFF",
     cta_text: "Claim Offer",
-    deadline_date: "2026-03-01"
+    deadline_date: "2026-08-01"
   };
 
   const { isDbConfigured, dbReady } = await import("@/lib/db");

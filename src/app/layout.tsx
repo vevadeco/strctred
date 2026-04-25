@@ -1,24 +1,24 @@
 import "./globals.css";
 
 import type { Metadata } from "next";
-import { DM_Serif_Display, Outfit } from "next/font/google";
+import { Playfair_Display, Inter } from "next/font/google";
 import { Providers } from "./providers";
 
-const headingFont = DM_Serif_Display({
+const headingFont = Playfair_Display({
   subsets: ["latin"],
-  weight: ["400"],
+  weight: ["400", "600", "700"],
   variable: "--font-heading"
 });
 
-const bodyFont = Outfit({
+const bodyFont = Inter({
   subsets: ["latin"],
   variable: "--font-body"
 });
 
 export const metadata: Metadata = {
-  title: "Earl's Landscaping | Professional Landscaping Services",
+  title: "Strctred Living Spaces | Custom Outdoor Structures",
   description:
-    "Professional landscaping services for residential and commercial properties"
+    "Premium outdoor structures — decks, pergolas, sheds, and open concept living spaces. Built to last, designed to inspire."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

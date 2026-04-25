@@ -10,16 +10,14 @@ const PromoBanner = ({ settings, onClose }) => {
   });
 
   useEffect(() => {
-    // Parse deadline from settings
     const getDeadline = () => {
       if (settings?.deadline_date) {
         return new Date(settings.deadline_date);
       }
-      // Default: March 1st of current or next year
       const now = new Date();
-      let deadline = new Date(now.getFullYear(), 2, 1);
+      let deadline = new Date(now.getFullYear(), 5, 1);
       if (now > deadline) {
-        deadline = new Date(now.getFullYear() + 1, 2, 1);
+        deadline = new Date(now.getFullYear() + 1, 5, 1);
       }
       return deadline;
     };
@@ -42,7 +40,6 @@ const PromoBanner = ({ settings, onClose }) => {
 
     calculateTimeLeft();
     const timer = setInterval(calculateTimeLeft, 1000);
-
     return () => clearInterval(timer);
   }, [settings?.deadline_date]);
 
@@ -59,9 +56,8 @@ const PromoBanner = ({ settings, onClose }) => {
     </div>
   );
 
-  // Use settings or defaults
-  const title = settings?.title || "Spring Cleanup Special - 15% OFF!";
-  const subtitle = settings?.subtitle || "Book by March 1st to save on your spring landscaping";
+  const title = settings?.title || "Summer Build Special — 10% OFF Decks & Pergolas!";
+  const subtitle = settings?.subtitle || "Book your project before the season fills up";
   const ctaText = settings?.cta_text || "Claim Offer";
 
   return (
@@ -71,7 +67,6 @@ const PromoBanner = ({ settings, onClose }) => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex items-center justify-between gap-3">
-          {/* Left: Promo Text */}
           <div className="flex items-center gap-2 sm:gap-3">
             <div className="hidden sm:flex items-center justify-center w-8 h-8 bg-white/20 rounded-full">
               <Percent className="w-4 h-4 text-white" />
@@ -86,7 +81,6 @@ const PromoBanner = ({ settings, onClose }) => {
             </div>
           </div>
 
-          {/* Center: Countdown Timer */}
           <div className="hidden md:flex items-center gap-1.5">
             <Clock className="w-3 h-3 text-white/80" />
             <div className="flex items-center gap-0.5">
@@ -100,7 +94,6 @@ const PromoBanner = ({ settings, onClose }) => {
             </div>
           </div>
 
-          {/* Right: CTA + Close */}
           <div className="flex items-center gap-2">
             <a
               href="#hero"
@@ -120,26 +113,17 @@ const PromoBanner = ({ settings, onClose }) => {
           </div>
         </div>
 
-        {/* Mobile Timer */}
         <div className="md:hidden flex items-center justify-center gap-1 mt-1.5 pt-1.5 border-t border-white/20">
           <Clock className="w-3 h-3 text-white/80" />
           <span className="font-body text-[10px] text-white/80 mr-1">Ends in:</span>
           <div className="flex items-center gap-0.5">
-            <span className="font-body font-bold text-white text-xs">
-              {timeLeft.days}d
-            </span>
+            <span className="font-body font-bold text-white text-xs">{timeLeft.days}d</span>
             <span className="text-white/60 text-xs">:</span>
-            <span className="font-body font-bold text-white text-xs">
-              {String(timeLeft.hours).padStart(2, "0")}h
-            </span>
+            <span className="font-body font-bold text-white text-xs">{String(timeLeft.hours).padStart(2, "0")}h</span>
             <span className="text-white/60 text-xs">:</span>
-            <span className="font-body font-bold text-white text-xs">
-              {String(timeLeft.minutes).padStart(2, "0")}m
-            </span>
+            <span className="font-body font-bold text-white text-xs">{String(timeLeft.minutes).padStart(2, "0")}m</span>
             <span className="text-white/60 text-xs">:</span>
-            <span className="font-body font-bold text-white text-xs">
-              {String(timeLeft.seconds).padStart(2, "0")}s
-            </span>
+            <span className="font-body font-bold text-white text-xs">{String(timeLeft.seconds).padStart(2, "0")}s</span>
           </div>
         </div>
       </div>

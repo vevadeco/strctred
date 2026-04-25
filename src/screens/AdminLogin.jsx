@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Leaf, Lock, User } from "lucide-react";
+import { Hammer, Lock, User } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -46,15 +46,15 @@ const AdminLogin = () => {
       <Card className="w-full max-w-md shadow-xl" data-testid="login-card">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-4">
-            <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-              <Leaf className="w-8 h-8 text-primary-foreground" />
+            <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center">
+              <Hammer className="w-8 h-8 text-primary-foreground" />
             </div>
           </div>
           <CardTitle className="font-heading text-2xl text-foreground">
             Admin Login
           </CardTitle>
           <p className="font-body text-muted-foreground text-sm mt-2">
-            Earl's Landscaping Dashboard
+            Strctred Living Spaces Dashboard
           </p>
         </CardHeader>
         <CardContent className="pt-6">

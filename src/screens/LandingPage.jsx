@@ -16,7 +16,6 @@ const LandingPage = () => {
   const [showPromo, setShowPromo] = useState(false);
   const [promoSettings, setPromoSettings] = useState(null);
 
-  // Fetch promo settings and track page view on mount
   useEffect(() => {
     const fetchPromoSettings = async () => {
       try {
@@ -60,9 +59,9 @@ const LandingPage = () => {
   return (
     <div className="min-h-screen bg-background noise-bg" data-testid="landing-page">
       {showPromo && promoSettings && (
-        <PromoBanner 
-          settings={promoSettings} 
-          onClose={() => setShowPromo(false)} 
+        <PromoBanner
+          settings={promoSettings}
+          onClose={() => setShowPromo(false)}
         />
       )}
       <Navbar onGetQuote={scrollToForm} hasPromo={showPromo} />
