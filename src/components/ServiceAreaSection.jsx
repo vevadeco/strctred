@@ -6,14 +6,11 @@ const ServiceAreaSection = ({ onGetQuote }) => {
     { name: "Hamilton", primary: true },
     { name: "Burlington", primary: false },
     { name: "Oakville", primary: false },
-    { name: "Mississauga", primary: false },
     { name: "Stoney Creek", primary: false },
     { name: "Ancaster", primary: false },
     { name: "Dundas", primary: false },
     { name: "Grimsby", primary: false },
-    { name: "Milton", primary: false },
     { name: "Brampton", primary: false },
-    { name: "Toronto", primary: false },
     { name: "Niagara Region", primary: false },
   ];
 

@@ -17,19 +17,11 @@ export async function PATCH(req: Request, ctx: { params: Promise<{ id: string }>
   const { id } = await ctx.params;
   const url = new URL(req.url);
   const status = (url.searchParams.get("status") || "").trim();
-  const allowed = new Set(["new", "contacted", "qualified", "converted", "won", "lost", "closed"]);
+  const allowed = new Set(["draft", "sent", "accepted", "declined", "paid", "overdue", "cancelled"]);
   if (!allowed.has(status)) {
     return NextResponse.json({ error: "Invalid status" }, { status: 400 });
   }
 
-  // Set contacted_at when status changes to contacted for the first time
-  if (status === "contacted") {
-    await sql`UPDATE leads SET status = ${status}, contacted_at = COALESCE(contacted_at, now()) WHERE id = ${id}`;
-  } else if (status === "won" || status === "lost" || status === "closed") {
-    await sql`UPDATE leads SET status = ${status}, closed_at = now() WHERE id = ${id}`;
-  } else {
-    await sql`UPDATE leads SET status = ${status} WHERE id = ${id}`;
-  }
-
+  await sql`UPDATE invoices SET status = ${status}, updated_at = now() WHERE id = ${id}`;
   return NextResponse.json({ success: true });
 }

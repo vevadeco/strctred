@@ -18,14 +18,44 @@ export async function GET(req: Request) {
   const limit = Math.min(Number(url.searchParams.get("limit") || "100") || 100, 250);
   const offset = Math.max(Number(url.searchParams.get("offset") || "0") || 0, 0);
 
-  const { rows } = await sql<LeadRow>`
-    SELECT id, created_at, name, email, phone, service_type, message, status, source
-    FROM leads
-    ORDER BY created_at DESC
-    LIMIT ${limit} OFFSET ${offset}
-  `;
+  const statusFilter = url.searchParams.get("status") || "";
+  const priorityFilter = url.searchParams.get("priority") || "";
 
-  const out = rows.map((r) => ({
+  let query;
+  if (statusFilter && priorityFilter) {
+    query = await sql<LeadRow>`
+      SELECT id, created_at, name, email, phone, service_type, message, status, source, priority, notes, contacted_at, closed_at
+      FROM leads
+      WHERE status = ${statusFilter} AND priority = ${priorityFilter}
+      ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+  } else if (statusFilter) {
+    query = await sql<LeadRow>`
+      SELECT id, created_at, name, email, phone, service_type, message, status, source, priority, notes, contacted_at, closed_at
+      FROM leads
+      WHERE status = ${statusFilter}
+      ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+  } else if (priorityFilter) {
+    query = await sql<LeadRow>`
+      SELECT id, created_at, name, email, phone, service_type, message, status, source, priority, notes, contacted_at, closed_at
+      FROM leads
+      WHERE priority = ${priorityFilter}
+      ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+  } else {
+    query = await sql<LeadRow>`
+      SELECT id, created_at, name, email, phone, service_type, message, status, source, priority, notes, contacted_at, closed_at
+      FROM leads
+      ORDER BY created_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    `;
+  }
+
+  const out = query.rows.map((r) => ({
     id: r.id,
     created_at: r.created_at,
     name: r.name,
@@ -34,7 +64,11 @@ export async function GET(req: Request) {
     service_type: r.service_type,
     message: r.message,
     status: r.status,
-    source: r.source
+    source: r.source,
+    priority: r.priority,
+    notes: r.notes,
+    contacted_at: r.contacted_at,
+    closed_at: r.closed_at
   }));
 
   return NextResponse.json(out);

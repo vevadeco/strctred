@@ -15,8 +15,6 @@ const Footer = () => {
     "Hamilton",
     "Burlington",
     "Oakville",
-    "Mississauga",
-    "Toronto",
     "Niagara Region",
   ];
 
