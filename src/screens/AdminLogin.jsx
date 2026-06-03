@@ -46,7 +46,7 @@ const AdminLogin = () => {
       <Card className="w-full max-w-md shadow-xl" data-testid="login-card">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-4">
-            <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-20 w-auto" />
+            <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-20 w-auto mix-blend-multiply" />
           </div>
           <CardTitle className="font-heading text-2xl text-foreground">
             Admin Login

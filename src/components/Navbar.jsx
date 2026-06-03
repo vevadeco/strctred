@@ -31,7 +31,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#" className="flex items-center" data-testid="logo">
-            <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-14 w-auto" />
+            <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-14 w-auto mix-blend-multiply" />
           </a>
 
           {/* Desktop Navigation */}

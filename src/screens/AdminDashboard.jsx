@@ -475,7 +475,9 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-10 w-auto brightness-0 invert" />
+              <div className="bg-white rounded-lg px-2 py-1">
+                <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-8 w-auto" />
+              </div>
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" onClick={fetchData} className="text-primary-foreground hover:bg-primary-foreground/10">

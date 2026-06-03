@@ -26,7 +26,9 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-16 w-auto brightness-0 invert" />
+              <div className="bg-white rounded-lg px-2 py-1 inline-block">
+                <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-14 w-auto" />
+              </div>
             </div>
             <p className="font-body text-primary-foreground/80 text-sm leading-relaxed mb-6">
               Premium outdoor structures built with precision craftsmanship. 
