@@ -16,6 +16,7 @@ const PUBLIC_KEYS = new Set([
   "business_email",
   "business_phone",
   "business_address",
+  "service_areas",
 ]);
 
 // Keys that are stored but redacted when returned
@@ -65,6 +66,7 @@ const SettingsUpdateSchema = z.object({
   business_email: z.string().trim().optional(),
   business_phone: z.string().trim().optional(),
   business_address: z.string().trim().optional(),
+  service_areas: z.string().optional(),
 });
 
 export async function PUT(req: Request) {

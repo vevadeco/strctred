@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { MapPin, CheckCircle } from "lucide-react";
 
-const ServiceAreaSection = ({ onGetQuote }) => {
-  const serviceAreas = [
+const ServiceAreaSection = ({ onGetQuote, serviceAreas: propAreas }) => {
+  const serviceAreas = propAreas && propAreas.length > 0 ? propAreas : [
     { name: "Hamilton", primary: true },
     { name: "Burlington", primary: false },
     { name: "Oakville", primary: false },
@@ -10,7 +10,7 @@ const ServiceAreaSection = ({ onGetQuote }) => {
     { name: "Ancaster", primary: false },
     { name: "Dundas", primary: false },
     { name: "Grimsby", primary: false },
-    { name: "Brampton", primary: false },
+    { name: "Brantford", primary: false },
     { name: "Niagara Region", primary: false },
   ];
 

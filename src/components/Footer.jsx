@@ -1,7 +1,11 @@
 import { Phone, Mail, MapPin } from "lucide-react";
 
-const Footer = () => {
+const Footer = ({ phone, email, address }) => {
   const currentYear = new Date().getFullYear();
+  const displayPhone = phone || "(905) 973-6566";
+  const displayEmail = email || "hello@strctred.com";
+  const displayAddress = address || "Hamilton, Ontario, Canada";
+  const phoneHref = "tel:+" + displayPhone.replace(/[^0-9]/g, "");
 
   const structures = [
     "Custom Decks",
@@ -36,24 +40,24 @@ const Footer = () => {
             </p>
             <div className="space-y-3">
               <a
-                href="tel:+15551234567"
+                href={phoneHref}
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-secondary transition-colors"
                 data-testid="footer-phone"
               >
                 <Phone className="w-4 h-4" />
-                <span className="font-body text-sm">(555) 123-4567</span>
+                <span className="font-body text-sm">{displayPhone}</span>
               </a>
               <a
-                href="mailto:hello@strctred.com"
+                href={`mailto:${displayEmail}`}
                 className="flex items-center gap-3 text-primary-foreground/80 hover:text-secondary transition-colors"
                 data-testid="footer-email"
               >
                 <Mail className="w-4 h-4" />
-                <span className="font-body text-sm">hello@strctred.com</span>
+                <span className="font-body text-sm">{displayEmail}</span>
               </a>
               <div className="flex items-center gap-3 text-primary-foreground/80">
                 <MapPin className="w-4 h-4 flex-shrink-0" />
-                <span className="font-body text-sm">Hamilton, Ontario, Canada</span>
+                <span className="font-body text-sm">{displayAddress}</span>
               </div>
             </div>
           </div>

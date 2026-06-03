@@ -30,7 +30,7 @@ import {
   Trash2, RefreshCw, Phone, Mail, Calendar, Megaphone, Save,
   FileText, Plus, DollarSign, StickyNote, ArrowRightLeft,
   XCircle, Settings, Link, CheckCircle2, Copy, ExternalLink,
-  CreditCard, AlertTriangle, ChevronRight, Send,
+  CreditCard, AlertTriangle, ChevronRight, Send, MapPin,
 } from "lucide-react";
 import { toast } from "sonner";
 import axios from "axios";
@@ -120,6 +120,19 @@ const AdminDashboard = () => {
   });
   const [isSavingSettings, setIsSavingSettings] = useState(false);
 
+  // ── Service Areas ────────────────────────────────────────────────────────────
+  const [serviceAreasEdit, setServiceAreasEdit] = useState([
+    { name: "Hamilton", primary: true },
+    { name: "Burlington", primary: false },
+    { name: "Oakville", primary: false },
+    { name: "Stoney Creek", primary: false },
+    { name: "Ancaster", primary: false },
+    { name: "Dundas", primary: false },
+    { name: "Grimsby", primary: false },
+    { name: "Brantford", primary: false },
+    { name: "Niagara Region", primary: false },
+  ]);
+
   // ── Lead management ──────────────────────────────────────────────────────────
   const [leadFilter, setLeadFilter] = useState("all");
   const [priorityFilter, setPriorityFilter] = useState("all");
@@ -158,6 +171,13 @@ const AdminDashboard = () => {
       setPromoSettings(promoRes.data);
       setInvoices(invoicesRes.data);
       setAppSettings((prev) => ({ ...prev, ...settingsRes.data }));
+      // Load service areas
+      if (settingsRes.data.service_areas) {
+        try {
+          const parsed = JSON.parse(settingsRes.data.service_areas);
+          if (Array.isArray(parsed) && parsed.length > 0) setServiceAreasEdit(parsed);
+        } catch { /* keep defaults */ }
+      }
     } catch (error) {
       if (error.response?.status === 401) {
         router.push("/admin/login");
@@ -427,9 +447,11 @@ const AdminDashboard = () => {
   const handleSaveSettings = async () => {
     setIsSavingSettings(true);
     try {
-      await axios.put(`${API}/admin/settings`, appSettings);
+      await axios.put(`${API}/admin/settings`, {
+        ...appSettings,
+        service_areas: JSON.stringify(serviceAreasEdit),
+      });
       toast.success("Settings saved");
-      // Re-fetch to get masked values back
       const res = await axios.get(`${API}/admin/settings`);
       setAppSettings((prev) => ({ ...prev, ...res.data }));
     } catch {
@@ -941,6 +963,69 @@ const AdminDashboard = () => {
                       <Input value={appSettings.business_address || ""} onChange={(e) => setAppSettings({ ...appSettings, business_address: e.target.value })} placeholder="Hamilton, Ontario" className="font-body" />
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Service Areas */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-heading text-lg flex items-center gap-2">
+                    <MapPin className="w-5 h-5" />Service Areas
+                  </CardTitle>
+                  <CardDescription className="font-body">Manage the areas displayed on the website. The first area marked as primary is highlighted.</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="space-y-2">
+                    {serviceAreasEdit.map((area, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <Input
+                          value={area.name}
+                          onChange={(e) => {
+                            const updated = [...serviceAreasEdit];
+                            updated[index] = { ...updated[index], name: e.target.value };
+                            setServiceAreasEdit(updated);
+                          }}
+                          placeholder="Area name"
+                          className="font-body text-sm flex-1"
+                        />
+                        <label className="flex items-center gap-1.5 cursor-pointer whitespace-nowrap">
+                          <input
+                            type="checkbox"
+                            checked={area.primary}
+                            onChange={(e) => {
+                              const updated = serviceAreasEdit.map((a, i) => ({
+                                ...a,
+                                primary: i === index ? e.target.checked : false,
+                              }));
+                              setServiceAreasEdit(updated);
+                            }}
+                            className="rounded border-border"
+                          />
+                          <span className="text-xs font-body text-muted-foreground">Primary</span>
+                        </label>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 w-8 p-0 text-muted-foreground hover:text-destructive"
+                          onClick={() => {
+                            if (serviceAreasEdit.length <= 1) return;
+                            setServiceAreasEdit(serviceAreasEdit.filter((_, i) => i !== index));
+                          }}
+                          disabled={serviceAreasEdit.length <= 1}
+                        >
+                          <XCircle className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => setServiceAreasEdit([...serviceAreasEdit, { name: "", primary: false }])}
+                    className="font-body"
+                  >
+                    <Plus className="w-3 h-3 mr-2" />Add Area
+                  </Button>
                 </CardContent>
               </Card>
 

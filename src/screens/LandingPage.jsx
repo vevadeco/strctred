@@ -15,6 +15,8 @@ const API = "/api";
 const LandingPage = () => {
   const [showPromo, setShowPromo] = useState(false);
   const [promoSettings, setPromoSettings] = useState(null);
+  const [serviceAreas, setServiceAreas] = useState([]);
+  const [businessInfo, setBusinessInfo] = useState({});
 
   useEffect(() => {
     const fetchPromoSettings = async () => {
@@ -24,6 +26,24 @@ const LandingPage = () => {
         setShowPromo(response.data.enabled);
       } catch (e) {
         console.error("Failed to fetch promo settings:", e);
+      }
+    };
+
+    const fetchServiceAreas = async () => {
+      try {
+        const response = await axios.get(`${API}/service-areas`);
+        setServiceAreas(response.data);
+      } catch (e) {
+        console.error("Failed to fetch service areas:", e);
+      }
+    };
+
+    const fetchBusinessInfo = async () => {
+      try {
+        const response = await axios.get(`${API}/business-info`);
+        setBusinessInfo(response.data);
+      } catch (e) {
+        console.error("Failed to fetch business info:", e);
       }
     };
 
@@ -46,6 +66,8 @@ const LandingPage = () => {
     };
 
     fetchPromoSettings();
+    fetchServiceAreas();
+    fetchBusinessInfo();
     trackPageView();
   }, []);
 
@@ -69,9 +91,13 @@ const LandingPage = () => {
         <HeroSection />
         <ServicesSection onGetQuote={scrollToForm} />
         <TestimonialsSection />
-        <ServiceAreaSection onGetQuote={scrollToForm} />
+        <ServiceAreaSection onGetQuote={scrollToForm} serviceAreas={serviceAreas} />
       </main>
-      <Footer />
+      <Footer
+        phone={businessInfo.business_phone}
+        email={businessInfo.business_email}
+        address={businessInfo.business_address}
+      />
     </div>
   );
 };
