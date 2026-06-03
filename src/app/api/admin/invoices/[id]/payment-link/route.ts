@@ -45,7 +45,7 @@ export async function POST(_req: Request, ctx: { params: Promise<{ id: string }>
     );
   }
 
-  const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-05-28.basil" });
+  const stripe = new Stripe(stripeSecretKey, { apiVersion: "2025-02-24.acacia" });
 
   // If a payment link already exists, return it
   if (invoice.stripe_payment_link) {
@@ -141,7 +141,7 @@ export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string 
     const settings = await getSettings(["stripe_secret_key"]);
     if (settings.stripe_secret_key) {
       try {
-        const stripe = new Stripe(settings.stripe_secret_key, { apiVersion: "2025-05-28.basil" });
+        const stripe = new Stripe(settings.stripe_secret_key, { apiVersion: "2025-02-24.acacia" });
         await stripe.paymentLinks.update(invRows[0].stripe_payment_link_id, { active: false });
       } catch {
         // Non-fatal — continue clearing DB record

@@ -23,7 +23,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "Stripe not configured" }, { status: 422 });
   }
 
-  const stripe = new Stripe(settings.stripe_secret_key, { apiVersion: "2025-05-28.basil" });
+  const stripe = new Stripe(settings.stripe_secret_key, { apiVersion: "2025-02-24.acacia" });
 
   let event: Stripe.Event;
   try {
