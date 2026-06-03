@@ -32,7 +32,6 @@ import {
   XCircle, Settings, Link, CheckCircle2, Copy, ExternalLink,
   CreditCard, AlertTriangle, ChevronRight, Send,
 } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -476,7 +475,7 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <Image src="/logo.png" alt="Strctred Living Spaces" width={120} height={48} className="h-10 w-auto object-contain brightness-0 invert" />
+              <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-10 w-auto brightness-0 invert" />
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" onClick={fetchData} className="text-primary-foreground hover:bg-primary-foreground/10">

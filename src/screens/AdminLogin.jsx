@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Lock, User } from "lucide-react";
-import Image from "next/image";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -47,7 +46,7 @@ const AdminLogin = () => {
       <Card className="w-full max-w-md shadow-xl" data-testid="login-card">
         <CardHeader className="text-center pb-2">
           <div className="flex justify-center mb-4">
-            <Image src="/logo.png" alt="Strctred Living Spaces" width={140} height={56} className="h-20 w-auto object-contain" priority />
+            <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-20 w-auto" />
           </div>
           <CardTitle className="font-heading text-2xl text-foreground">
             Admin Login

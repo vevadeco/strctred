@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-import Image from "next/image";
 
 const Navbar = ({ onGetQuote, hasPromo = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,7 +31,7 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <a href="#" className="flex items-center" data-testid="logo">
-            <Image src="/logo.png" alt="Strctred Living Spaces" width={160} height={64} className="h-14 w-auto object-contain" priority />
+            <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-14 w-auto" />
           </a>
 
           {/* Desktop Navigation */}

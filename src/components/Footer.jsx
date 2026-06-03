@@ -1,5 +1,4 @@
 import { Phone, Mail, MapPin } from "lucide-react";
-import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -27,7 +26,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="mb-6">
-              <Image src="/logo.png" alt="Strctred Living Spaces" width={180} height={72} className="h-16 w-auto object-contain brightness-0 invert" />
+              <img src="/logo.png" alt="Strctred Outdoor Living Spaces" className="h-16 w-auto brightness-0 invert" />
             </div>
             <p className="font-body text-primary-foreground/80 text-sm leading-relaxed mb-6">
               Premium outdoor structures built with precision craftsmanship. 
