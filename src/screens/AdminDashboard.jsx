@@ -235,22 +235,22 @@ const AdminDashboard = () => {
     }
   };
 
-  /** Convert a lead directly into a blank draft estimate */
-  const handleConvertLeadToEstimate = async (lead) => {
-    try {
-      const res = await axios.post(`${API}/admin/leads/${lead.id}/convert`);
-      toast.success(`Estimate ${res.data.estimate_number} created`);
-      // Update lead status locally if it changed
-      setLeads((prev) => prev.map((l) =>
-        l.id === lead.id && (l.status === "new" || l.status === "contacted")
-          ? { ...l, status: "qualified" }
-          : l
-      ));
-      await fetchData(); // refresh invoices list
-      setShowLeadDetail(false);
-    } catch {
-      toast.error("Failed to create estimate from lead");
-    }
+  /** Convert a lead to an estimate by opening the form pre-filled with lead details */
+  const handleConvertLeadToEstimate = (lead) => {
+    setInvoiceForm({
+      lead_id: lead.id,
+      client_name: lead.name || "",
+      client_email: lead.email || "",
+      client_phone: lead.phone || "",
+      client_address: "",
+      due_date: "",
+      tax_rate: 0,
+      notes: "",
+      items: [{ description: getServiceLabel(lead.service_type), quantity: 1, unit_price: 0 }],
+    });
+    setInvoiceType("estimate");
+    setShowLeadDetail(false);
+    setShowInvoiceForm(true);
   };
 
   const openLeadDetail = (lead) => {
@@ -715,9 +715,6 @@ const AdminDashboard = () => {
                                       </DropdownMenuItem>
                                       <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleConvertLeadToEstimate(lead); }} className="font-body">
                                         <ChevronRight className="w-4 h-4 mr-2" />Convert to Estimate
-                                      </DropdownMenuItem>
-                                      <DropdownMenuItem onClick={(e) => { e.stopPropagation(); openInvoiceFormForLead(lead, "estimate"); }} className="font-body">
-                                        <FileText className="w-4 h-4 mr-2" />New Estimate (custom)
                                       </DropdownMenuItem>
                                       <DropdownMenuSeparator />
                                       <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleDeleteLead(lead.id); }} className="text-destructive font-body">
@@ -1197,9 +1194,6 @@ const AdminDashboard = () => {
                 <div className="flex gap-2 flex-wrap">
                   <Button variant="outline" size="sm" onClick={() => handleConvertLeadToEstimate(selectedLead)} className="font-body">
                     <ChevronRight className="w-4 h-4 mr-2" />Convert to Estimate
-                  </Button>
-                  <Button variant="outline" size="sm" onClick={() => { openInvoiceFormForLead(selectedLead, "estimate"); setShowLeadDetail(false); }} className="font-body">
-                    <FileText className="w-4 h-4 mr-2" />Custom Estimate
                   </Button>
                 </div>
                 <Button variant="destructive" size="sm" onClick={() => { handleDeleteLead(selectedLead.id); setShowLeadDetail(false); }} className="font-body">
