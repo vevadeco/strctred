@@ -103,8 +103,8 @@ async function ensureSchema() {
   await sql`CREATE INDEX IF NOT EXISTS invoices_type_idx ON invoices(type);`;
   await sql`CREATE INDEX IF NOT EXISTS invoice_items_invoice_id_idx ON invoice_items(invoice_id);`;
 
-  // Migrations for existing tables
-  await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS priority TEXT NOT NULL DEFAULT 'medium';`;
+  // Migrations for existing tables — use nullable or provide DEFAULT to satisfy NOT NULL constraint on existing rows
+  await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS priority TEXT DEFAULT 'medium';`;
   await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS notes TEXT;`;
   await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS contacted_at TIMESTAMPTZ;`;
   await sql`ALTER TABLE leads ADD COLUMN IF NOT EXISTS closed_at TIMESTAMPTZ;`;
@@ -115,7 +115,10 @@ async function ensureSchema() {
 
 export async function dbReady() {
   if (!schemaReady) {
-    schemaReady = ensureSchema();
+    schemaReady = ensureSchema().catch((err) => {
+      schemaReady = null; // reset so it retries on next request
+      throw err;
+    });
   }
   return schemaReady;
 }
