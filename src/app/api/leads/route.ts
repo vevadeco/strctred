@@ -30,25 +30,42 @@ export async function POST(req: Request) {
     );
   }
 
-  await dbReady();
+  try {
+    await dbReady();
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[leads POST] dbReady failed:", message);
+    return NextResponse.json(
+      { success: false, message: "Database initialization failed", detail: message },
+      { status: 503 }
+    );
+  }
 
   const id = crypto.randomUUID();
   const { name, email, phone, service_type, message, source } = parsed.data;
 
-  await sql`
-    INSERT INTO leads (id, name, email, phone, service_type, message, status, source)
-    VALUES (
-      ${id},
-      ${name},
-      ${email},
-      ${phone},
-      ${service_type},
-      ${message ?? null},
-      'new',
-      ${source ?? "website"}
-    )
-  `;
+  try {
+    await sql`
+      INSERT INTO leads (id, name, email, phone, service_type, message, status, source)
+      VALUES (
+        ${id},
+        ${name},
+        ${email},
+        ${phone},
+        ${service_type},
+        ${message ?? null},
+        'new',
+        ${source ?? "website"}
+      )
+    `;
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error("[leads POST] INSERT failed:", message);
+    return NextResponse.json(
+      { success: false, message: "Failed to save lead", detail: message },
+      { status: 500 }
+    );
+  }
 
   return NextResponse.json({ success: true, message: "Lead created", id }, { status: 201 });
 }
-
