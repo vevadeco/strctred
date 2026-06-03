@@ -1,4 +1,5 @@
-import { Hammer, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -25,16 +26,8 @@ const Footer = () => {
         <div className="py-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="lg:col-span-1">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                <Hammer className="w-5 h-5 text-primary" />
-              </div>
-              <div className="flex flex-col">
-                <span className="font-heading text-xl leading-tight font-semibold">Strctred</span>
-                <span className="text-[10px] text-primary-foreground/80 font-body tracking-[0.2em] uppercase">
-                  Living Spaces
-                </span>
-              </div>
+            <div className="mb-6">
+              <Image src="/logo.png" alt="Strctred Living Spaces" width={180} height={72} className="h-16 w-auto object-contain brightness-0 invert" />
             </div>
             <p className="font-body text-primary-foreground/80 text-sm leading-relaxed mb-6">
               Premium outdoor structures built with precision craftsmanship. 

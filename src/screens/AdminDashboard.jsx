@@ -30,8 +30,9 @@ import {
   Trash2, RefreshCw, Phone, Mail, Calendar, Megaphone, Save,
   FileText, Plus, DollarSign, StickyNote, ArrowRightLeft,
   XCircle, Settings, Link, CheckCircle2, Copy, ExternalLink,
-  CreditCard, AlertTriangle, ChevronRight,
+  CreditCard, AlertTriangle, ChevronRight, Send,
 } from "lucide-react";
+import Image from "next/image";
 import { toast } from "sonner";
 import axios from "axios";
 
@@ -109,6 +110,10 @@ const AdminDashboard = () => {
     stripe_secret_key: "",
     stripe_webhook_secret: "",
     stripe_enabled: "false",
+    resend_api_key: "",
+    resend_enabled: "false",
+    resend_from_email: "",
+    resend_from_name: "",
     business_name: "",
     business_email: "",
     business_phone: "",
@@ -134,6 +139,8 @@ const AdminDashboard = () => {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [showInvoiceDetail, setShowInvoiceDetail] = useState(false);
   const [isCreatingPaymentLink, setIsCreatingPaymentLink] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [sendEmailTo, setSendEmailTo] = useState("");
 
   // ─────────────────────────────────────────────────────────────────────────────
 
@@ -363,6 +370,26 @@ const AdminDashboard = () => {
     navigator.clipboard.writeText(url).then(() => toast.success("Link copied to clipboard"));
   };
 
+  const handleSendEmail = async (invoiceId, overrideTo) => {
+    setIsSendingEmail(true);
+    try {
+      const payload = overrideTo ? { to: overrideTo } : {};
+      await axios.post(`${API}/admin/invoices/${invoiceId}/send`, payload);
+      const sentTo = overrideTo || selectedInvoice?.client_email;
+      toast.success(`Email sent to ${sentTo}`);
+      setInvoices((prev) => prev.map((inv) =>
+        inv.id === invoiceId && inv.status === "draft" ? { ...inv, status: "sent" } : inv
+      ));
+      if (selectedInvoice?.id === invoiceId && selectedInvoice?.status === "draft") {
+        setSelectedInvoice((prev) => ({ ...prev, status: "sent" }));
+      }
+    } catch (err) {
+      const msg = err.response?.data?.error || "Failed to send email";
+      toast.error(msg);
+    } finally {
+      setIsSendingEmail(false);
+    }
+  };
   // ── Invoice form helpers ──────────────────────────────────────────────────────
 
   const addInvoiceItem = () => setInvoiceForm((prev) => ({
@@ -434,6 +461,7 @@ const AdminDashboard = () => {
   const invoiceTotal = invoiceSubtotal + invoiceTax;
 
   const stripeConfigured = appSettings.stripe_enabled === "true" && appSettings.stripe_secret_key;
+  const resendConfigured = appSettings.resend_enabled === "true" && appSettings.resend_api_key;
 
   // ── Lead's associated invoices helper ─────────────────────────────────────────
   const getLeadInvoices = (leadId) => invoices.filter((inv) => inv.lead_id === leadId);
@@ -448,13 +476,7 @@ const AdminDashboard = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-secondary rounded-lg flex items-center justify-center">
-                <Hammer className="w-5 h-5 text-primary" />
-              </div>
-              <div>
-                <h1 className="font-heading text-xl font-semibold">Strctred Living Spaces</h1>
-                <p className="text-xs text-primary-foreground/70 font-body">Admin Dashboard</p>
-              </div>
+              <Image src="/logo.png" alt="Strctred Living Spaces" width={120} height={48} className="h-10 w-auto object-contain brightness-0 invert" />
             </div>
             <div className="flex items-center gap-2">
               <Button variant="ghost" size="sm" onClick={fetchData} className="text-primary-foreground hover:bg-primary-foreground/10">
@@ -812,6 +834,11 @@ const AdminDashboard = () => {
                                         <ArrowRightLeft className="w-4 h-4 mr-2" />Convert to Invoice
                                       </DropdownMenuItem>
                                     )}
+                                    {resendConfigured && inv.client_email && (
+                                      <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleSendEmail(inv.id, inv.client_email); }} className="font-body">
+                                        <Send className="w-4 h-4 mr-2" />Send Email
+                                      </DropdownMenuItem>
+                                    )}
                                     {inv.type === "invoice" && stripeConfigured && !inv.stripe_payment_link && (
                                       <DropdownMenuItem onClick={(e) => { e.stopPropagation(); handleCreatePaymentLink(inv.id); }} className="font-body">
                                         <CreditCard className="w-4 h-4 mr-2" />Create Payment Link
@@ -916,6 +943,76 @@ const AdminDashboard = () => {
                       <Input value={appSettings.business_address || ""} onChange={(e) => setAppSettings({ ...appSettings, business_address: e.target.value })} placeholder="Hamilton, Ontario" className="font-body" />
                     </div>
                   </div>
+                </CardContent>
+              </Card>
+
+              {/* Resend */}
+              <Card>
+                <CardHeader>
+                  <CardTitle className="font-heading text-lg flex items-center gap-2">
+                    <Send className="w-5 h-5" />Resend Email Integration
+                  </CardTitle>
+                  <CardDescription className="font-body">
+                    Connect Resend to send invoices and estimates directly to clients by email.
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                    <div>
+                      <Label className="font-body font-semibold">Enable Email Sending</Label>
+                      <p className="text-sm text-muted-foreground font-body">Send invoices and estimates via Resend</p>
+                    </div>
+                    <Switch
+                      checked={appSettings.resend_enabled === "true"}
+                      onCheckedChange={(c) => setAppSettings({ ...appSettings, resend_enabled: c ? "true" : "false" })}
+                    />
+                  </div>
+
+                  {appSettings.resend_enabled === "true" && (
+                    <div className="space-y-4">
+                      <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg flex items-start gap-2">
+                        <AlertTriangle className="w-4 h-4 text-amber-600 mt-0.5 flex-shrink-0" />
+                        <p className="text-xs font-body text-amber-800">
+                          Your API key is stored in the database and only used server-side. The masked value (••••••••) means a key is already saved.
+                          Get your key at <strong>resend.com</strong> — you'll need to verify your sending domain first.
+                        </p>
+                      </div>
+                      <div className="grid grid-cols-1 gap-4">
+                        <div className="space-y-2">
+                          <Label className="font-body font-medium">API Key</Label>
+                          <Input
+                            type="password"
+                            value={appSettings.resend_api_key || ""}
+                            onChange={(e) => setAppSettings({ ...appSettings, resend_api_key: e.target.value })}
+                            placeholder="re_..."
+                            className="font-body font-mono text-sm"
+                          />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                          <div className="space-y-2">
+                            <Label className="font-body font-medium">From Email</Label>
+                            <Input
+                              type="email"
+                              value={appSettings.resend_from_email || ""}
+                              onChange={(e) => setAppSettings({ ...appSettings, resend_from_email: e.target.value })}
+                              placeholder="invoices@yourdomain.com"
+                              className="font-body text-sm"
+                            />
+                            <p className="text-xs text-muted-foreground font-body">Must be on a verified domain in Resend.</p>
+                          </div>
+                          <div className="space-y-2">
+                            <Label className="font-body font-medium">From Name</Label>
+                            <Input
+                              value={appSettings.resend_from_name || ""}
+                              onChange={(e) => setAppSettings({ ...appSettings, resend_from_name: e.target.value })}
+                              placeholder="Strctred Living Spaces"
+                              className="font-body text-sm"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </CardContent>
               </Card>
 
@@ -1191,6 +1288,43 @@ const AdminDashboard = () => {
                   <SelectTrigger className={`h-9 text-sm font-body w-48 ${getInvoiceStatusColor(selectedInvoice.status)}`}><SelectValue /></SelectTrigger>
                   <SelectContent>{INVOICE_STATUSES.map((s) => <SelectItem key={s} value={s} className="font-body text-sm capitalize">{s}</SelectItem>)}</SelectContent>
                 </Select>
+              </div>
+
+              {/* Email section */}
+              <div className="space-y-2 p-4 border rounded-lg">
+                <Label className="font-body font-semibold text-sm flex items-center gap-2">
+                  <Mail className="w-4 h-4" />Send by Email
+                </Label>
+                {resendConfigured ? (
+                  <div className="space-y-2">
+                    <div className="flex gap-2">
+                      <Input
+                        value={sendEmailTo || selectedInvoice?.client_email || ""}
+                        onChange={(e) => setSendEmailTo(e.target.value)}
+                        placeholder="client@email.com"
+                        className="font-body text-sm h-8"
+                      />
+                      <Button
+                        size="sm"
+                        onClick={() => handleSendEmail(selectedInvoice.id, sendEmailTo || selectedInvoice?.client_email)}
+                        disabled={isSendingEmail}
+                        className="font-body whitespace-nowrap"
+                      >
+                        <Send className="w-3 h-3 mr-2" />
+                        {isSendingEmail ? "Sending..." : "Send"}
+                      </Button>
+                    </div>
+                    <p className="text-xs text-muted-foreground font-body">
+                      Sends the {selectedInvoice?.type} with line items
+                      {selectedInvoice?.stripe_payment_link ? " and a Pay Now button" : ""}.
+                    </p>
+                  </div>
+                ) : (
+                  <p className="text-xs text-muted-foreground font-body flex items-center gap-1">
+                    <AlertTriangle className="w-3.5 h-3.5 text-amber-500" />
+                    Resend is not configured. Go to Settings to enable email sending.
+                  </p>
+                )}
               </div>
 
               {/* Payment link section */}

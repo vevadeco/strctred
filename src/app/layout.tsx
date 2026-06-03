@@ -18,7 +18,11 @@ const bodyFont = Inter({
 export const metadata: Metadata = {
   title: "Strctred Living Spaces | Custom Outdoor Structures",
   description:
-    "Premium outdoor structures — decks, pergolas, sheds, and open concept living spaces. Built to last, designed to inspire."
+    "Premium outdoor structures — decks, pergolas, sheds, and open concept living spaces. Built to last, designed to inspire.",
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  }
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

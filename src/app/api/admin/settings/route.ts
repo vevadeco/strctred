@@ -9,6 +9,9 @@ import { requireAdmin } from "@/lib/admin";
 const PUBLIC_KEYS = new Set([
   "stripe_publishable_key",
   "stripe_enabled",
+  "resend_enabled",
+  "resend_from_email",
+  "resend_from_name",
   "business_name",
   "business_email",
   "business_phone",
@@ -19,6 +22,7 @@ const PUBLIC_KEYS = new Set([
 const SECRET_KEYS = new Set([
   "stripe_secret_key",
   "stripe_webhook_secret",
+  "resend_api_key",
 ]);
 
 const ALL_ALLOWED_KEYS = new Set([...PUBLIC_KEYS, ...SECRET_KEYS]);
@@ -53,6 +57,10 @@ const SettingsUpdateSchema = z.object({
   stripe_secret_key: z.string().trim().optional(),
   stripe_webhook_secret: z.string().trim().optional(),
   stripe_enabled: z.enum(["true", "false"]).optional(),
+  resend_api_key: z.string().trim().optional(),
+  resend_enabled: z.enum(["true", "false"]).optional(),
+  resend_from_email: z.string().trim().optional(),
+  resend_from_name: z.string().trim().optional(),
   business_name: z.string().trim().optional(),
   business_email: z.string().trim().optional(),
   business_phone: z.string().trim().optional(),

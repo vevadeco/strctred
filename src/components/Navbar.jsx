@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Hammer } from "lucide-react";
+import { Menu, X } from "lucide-react";
+import Image from "next/image";
 
 const Navbar = ({ onGetQuote, hasPromo = false }) => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -30,18 +31,8 @@ const Navbar = ({ onGetQuote, hasPromo = false }) => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <a href="#" className="flex items-center gap-3" data-testid="logo">
-            <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-              <Hammer className="w-5 h-5 text-primary-foreground" />
-            </div>
-            <div className="flex flex-col">
-              <span className="font-heading text-xl text-foreground leading-tight font-semibold tracking-tight">
-                Strctred
-              </span>
-              <span className="text-[10px] text-muted-foreground font-body tracking-[0.2em] uppercase">
-                Living Spaces
-              </span>
-            </div>
+          <a href="#" className="flex items-center" data-testid="logo">
+            <Image src="/logo.png" alt="Strctred Living Spaces" width={160} height={64} className="h-14 w-auto object-contain" priority />
           </a>
 
           {/* Desktop Navigation */}
