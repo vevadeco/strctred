@@ -1,3 +1,4 @@
+import { VevadeFooter } from "@/components/VevadeFooter";
 import "./globals.css";
 
 import type { Metadata } from "next";
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         {children}
         <Providers />
+        <VevadeFooter />
       </body>
     </html>
   );
